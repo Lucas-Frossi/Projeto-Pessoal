@@ -8,7 +8,7 @@ router.post("/cadastrar", function (req, res) {
     userController.cadastrar(req, res);
 });
 
-router.get("/listar", function (req, res) {
+router.post("/listar", function (req, res) {
     // função a ser chamada quando acessar /carros/listar
     userController.listar(req, res);
 });
