@@ -24,6 +24,7 @@ var empresasRouter = require("./src/routes/empresas");
 
 // Testes
 var userRouter = require("./src/routes/user");
+var quizzRouter = require("./src/routes/quizz");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,6 +41,8 @@ app.use("/empresas", empresasRouter);
 
 // Testes
 app.use("/user", userRouter);
+app.use("/quizz", quizzRouter);
+
 
 app.listen(PORTA_APP, function () {
     console.log(`

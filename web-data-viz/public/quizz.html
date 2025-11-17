@@ -5,26 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exemplo - Quiz</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <script src="../js/sessao.js"></script>
 </head>
 
 
 <body onload="onloadEsconder()">
     <div id="pontuacaoEJogo">
         <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
-
-        <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
-            <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
-                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
-                <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
-            </div>
-            <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
-                <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
-                    <span id="spanPontuacaoFinal">***</span>
-                </span>
-                <span id="msgFinal" class="width-fit-content">***</span>
-            </div>
-        </div>
 
         <div id="jogo" class="width-fit-content flex-colunar border-secondary">
 
@@ -73,36 +62,60 @@
 
 </html>
 <script>
-    const listaDeQuestoes = [
+    var idQuestao= sessionStorage.getItem('ID_QUESTAO');
+    
+    function buscarQuestoes() {
 
-        {
-            pergunta: "Qual mês tem 30 dias?",
-            alternativaA: "Janeiro",
-            alternativaB: "Dezembro",
-            alternativaC: "Junho",
-            alternativaD: "Agosto",
-            alternativaCorreta: "alternativaC"
-        },
-
-        {
-            pergunta: "Quantas horas tem em um dia?",
-            alternativaA: "30 horas",
-            alternativaB: "38 horas",
-            alternativaC: "48 horas",
-            alternativaD: "24 horas",
-            alternativaCorreta: "alternativaD"
-        },
-
-        {
-            pergunta: "Qual destes números é ímpar?",
-            alternativaA: "Dez",
-            alternativaB: "Doze",
-            alternativaC: "Oito",
-            alternativaD: "Onze",
-            alternativaCorreta: "alternativaD"
+        if (idQuestao == undefined) {
+            idQuestao = 1
         }
 
-    ]
+        fetch(`/quizz/buscar/${idQuestao}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(resposta => {
+
+                    console.log(resposta);
+                    console.log("ID: " + resposta[0].idQuestoes);
+                    console.log("Pergunta: " + resposta[0].descricao);
+
+                    spanNumeroDaQuestaoAtual.innerHTML = `${resposta[0].idQuestoes}`
+
+                    spanQuestaoExibida.innerHTML = resposta[0].descricao
+
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    function buscarAlternativas() {
+
+        fetch(`/quizz/listar/${idQuestao}`, {
+            method: "GET"
+        })
+            .then(res => {
+                res.json().then(resposta => {
+
+                    console.log(resposta);
+                    console.log("ID: " + resposta[0].idQuestoes);
+                    console.log("Pergunta: " + resposta[0].descricao);
+
+                    labelOpcaoUm.innerHTML = resposta[0].descricao;
+                    labelOpcaoDois.innerHTML = resposta[1].descricao;
+                    labelOpcaoTres.innerHTML = resposta[2].descricao;
+                    labelOpcaoQuatro.innerHTML = resposta[3].descricao;
+
+
+                })
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
 
     // variáveis globais    
     let numeroDaQuestaoAtual = 0
@@ -110,41 +123,27 @@
     let tentativaIncorreta = 0
     let certas = 0
     let erradas = 0
-    let quantidadeDeQuestoes = listaDeQuestoes.length
+    // let quantidadeDeQuestoes = listaDeQuestoes.length
     // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
 
     function onloadEsconder() {
-        document.getElementById('pontuacao').style.display = "none"
         document.getElementById('jogo').style.display = "none"
     }
 
     function iniciarQuiz() {
-        document.getElementById('pontuacao').style.display = "flex"
         document.getElementById('jogo').style.display = "flex"
         document.getElementById('btnIniciarQuiz').style.display = "none"
 
-        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+        // document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+        //preencherHTMLcomQuestaoAtual(0)
+        buscarQuestoes()
 
-        preencherHTMLcomQuestaoAtual(0)
+        buscarAlternativas()
 
         btnSubmeter.disabled = false
         btnProx.disabled = true
         // btnConcluir.disabled = true
         btnTentarNovamente.disabled = true
-    }
-
-    function preencherHTMLcomQuestaoAtual(index) {
-        habilitarAlternativas(true)
-        const questaoAtual = listaDeQuestoes[index]
-        numeroDaQuestaoAtual = index
-        console.log("questaoAtual")
-        console.log(questaoAtual)
-        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
-        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
-        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
-        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
-        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
-        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
     }
 
     function submeter() {
@@ -186,17 +185,18 @@
 
         desmarcarRadioButtons()
 
-        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
-            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
-        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
-            alert("Atenção... a próxima é a ultima questão!")
-            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
-        } else {
-            finalizarJogo()
-        }
-        limparCoresBackgroundOpcoes()
+        // if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+        //     preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        // } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+        //     alert("Atenção... a próxima é a ultima questão!")
+        //     preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        // } else {
+        //     finalizarJogo()
+        // }
+        // limparCoresBackgroundOpcoes()
     }
 
+    // coloccar na dash
     function tentarNovamente() {
         // atualiza a página
         window.location.reload()
@@ -271,14 +271,14 @@
             classComCoresParaMensagemFinal = "text-success-with-bg"
         }
 
-        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões."
+        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos) * 100) + "% das questões."
 
 
         document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
-        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal) 
+        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
         document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
 
-        document.getElementById('jogo').classList.add("text-new-gray") 
+        document.getElementById('jogo').classList.add("text-new-gray")
 
         btnProx.disabled = true
         btnSubmeter.disabled = true
