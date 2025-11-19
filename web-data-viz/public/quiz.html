@@ -6,14 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exemplo - Quiz</title>
     <link rel="stylesheet" href="./css/style.css">
-
-    <script src="../js/sessao.js"></script>
 </head>
 
 
 <body onload="onloadEsconder()">
     <div id="pontuacaoEJogo">
         <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
+
+        <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
+            <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
+                <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
+                <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+            </div>
+            <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
+                <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
+                    <span id="spanPontuacaoFinal">***</span>
+                </span>
+                <span id="msgFinal" class="width-fit-content">***</span>
+            </div>
+        </div>
 
         <div id="jogo" class="width-fit-content flex-colunar border-secondary">
 
@@ -62,60 +73,63 @@
 
 </html>
 <script>
-    var idQuestao= sessionStorage.getItem('ID_QUESTAO');
-    
-    function buscarQuestoes() {
+    const listaDeQuestoes = [
 
-        if (idQuestao == undefined) {
-            idQuestao = 1
+        {
+            pergunta: "Qual foi o primeiro modelo lançado da linha Air Jordan?",
+            alternativaA: "Air Jordan 3",
+            alternativaB: "Air Jordan 1",
+            alternativaC: "Air Jordan 6",
+            alternativaD: "Air jordan 11",
+            alternativaCorreta: "alternativaB"
+        },
+
+        {
+            pergunta: "Em que ano o Air Jordan 1 foi lançado?",
+            alternativaA: "1991",
+            alternativaB: "1988",
+            alternativaC: "1985",
+            alternativaD: "1984",
+            alternativaCorreta: "alternativaC"
+        },
+
+        {
+            pergunta: "Qual designer criou o Air Jordan 1?",
+            alternativaA: "Peter Moore",
+            alternativaB: "Travis Scott",
+            alternativaC: "Tinker Hatfield",
+            alternativaD: "Virgil Abloh",
+            alternativaCorreta: "alternativaA"
+        },
+
+        {
+            pergunta: "O logotipo “Jumpman” começou a ser usado oficialmente em qual modelo?",
+            alternativaA: "Air Jordan 1",
+            alternativaB: "Air Jordan 2",
+            alternativaC: "Air Jordan 5",
+            alternativaD: "Air Jordan 3",
+            alternativaCorreta: "alternativaD"
+        },
+
+        {
+            pergunta: "Qual desses modelos é famoso por ter sido proibido pela NBA?",
+            alternativaA: "Air Jordan 1 Bred",
+            alternativaB: "Air Jordan 11",
+            alternativaC: "Air Jordan 4",
+            alternativaD: "Air Jordan 7",
+            alternativaCorreta: "alternativaA"
+        },
+
+        {
+            pergunta: "Qual seu Air Jordan preferido?",
+            alternativaA: "Air Jordan 1",
+            alternativaB: "Air Jordan 3",
+            alternativaC: "Air Jordan 5",
+            alternativaD: "Air Jordan 11",
+            alternativaCorreta: "alternativaD"
         }
 
-        fetch(`/quizz/buscar/${idQuestao}`, {
-            method: "GET"
-        })
-            .then(res => {
-                res.json().then(resposta => {
-
-                    console.log(resposta);
-                    console.log("ID: " + resposta[0].idQuestoes);
-                    console.log("Pergunta: " + resposta[0].descricao);
-
-                    spanNumeroDaQuestaoAtual.innerHTML = `${resposta[0].idQuestoes}`
-
-                    spanQuestaoExibida.innerHTML = resposta[0].descricao
-
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    function buscarAlternativas() {
-
-        fetch(`/quizz/listar/${idQuestao}`, {
-            method: "GET"
-        })
-            .then(res => {
-                res.json().then(resposta => {
-
-                    console.log(resposta);
-                    console.log("ID: " + resposta[0].idQuestoes);
-                    console.log("Pergunta: " + resposta[0].descricao);
-
-                    labelOpcaoUm.innerHTML = resposta[0].descricao;
-                    labelOpcaoDois.innerHTML = resposta[1].descricao;
-                    labelOpcaoTres.innerHTML = resposta[2].descricao;
-                    labelOpcaoQuatro.innerHTML = resposta[3].descricao;
-
-
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
+    ]
 
     // variáveis globais    
     let numeroDaQuestaoAtual = 0
@@ -123,27 +137,41 @@
     let tentativaIncorreta = 0
     let certas = 0
     let erradas = 0
-    // let quantidadeDeQuestoes = listaDeQuestoes.length
+    let quantidadeDeQuestoes = listaDeQuestoes.length
     // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
 
     function onloadEsconder() {
+        document.getElementById('pontuacao').style.display = "none"
         document.getElementById('jogo').style.display = "none"
     }
 
     function iniciarQuiz() {
+        document.getElementById('pontuacao').style.display = "flex"
         document.getElementById('jogo').style.display = "flex"
         document.getElementById('btnIniciarQuiz').style.display = "none"
 
-        // document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
-        //preencherHTMLcomQuestaoAtual(0)
-        buscarQuestoes()
+        document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
 
-        buscarAlternativas()
+        preencherHTMLcomQuestaoAtual(0)
 
         btnSubmeter.disabled = false
         btnProx.disabled = true
         // btnConcluir.disabled = true
         btnTentarNovamente.disabled = true
+    }
+
+    function preencherHTMLcomQuestaoAtual(index) {
+        habilitarAlternativas(true)
+        const questaoAtual = listaDeQuestoes[index]
+        numeroDaQuestaoAtual = index
+        console.log("questaoAtual")
+        console.log(questaoAtual)
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+        document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
+        document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
+        document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
+        document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
     }
 
     function submeter() {
@@ -185,18 +213,17 @@
 
         desmarcarRadioButtons()
 
-        // if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
-        //     preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
-        // } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
-        //     alert("Atenção... a próxima é a ultima questão!")
-        //     preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
-        // } else {
-        //     finalizarJogo()
-        // }
-        // limparCoresBackgroundOpcoes()
+        if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+            alert("Atenção... a próxima é a ultima questão!")
+            preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+        } else {
+            finalizarJogo()
+        }
+        limparCoresBackgroundOpcoes()
     }
 
-    // coloccar na dash
     function tentarNovamente() {
         // atualiza a página
         window.location.reload()

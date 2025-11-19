@@ -51,8 +51,8 @@ body {
 }
 
 .titulo {
-  width: px;
-  height: auto;
+ height: auto;
+ width: 40px;
 }
 
 .header h1 {
@@ -64,7 +64,7 @@ body {
 .banner {
   height: var(--tamanho-banner);
   color: white;
-  background-image: url('../assets/imgs/foto_banner_home.png');
+  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
   background-size: cover;
 }
 
@@ -130,6 +130,10 @@ body {
 .footer .container {
   justify-content: center;
   text-align: center;
+}
+
+.footer .container .version {
+  font-size: 12px;
 }
 
 /* LOGIN */

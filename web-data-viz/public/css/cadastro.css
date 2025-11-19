@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1c1c1c;
+}
+
+.container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.left-img {
+    display: flex;
+    flex: 1;
+    background-image: url('../assets/imgs/foto_airjordantravis.webp');
+    background-size: cover;
+    background-position: center;
+
+}
+
+.left-img img {
+    align-self: flex-end;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    width: 40px;
+    height: auto;
+}
+
+.right-form {
+    flex: 1;
+    background-color: #1c1c1c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-form a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.header-box {
+    display: flex;
+    background-color: #333;
+    border-radius: 5px;
+    height: 70px;
+    width: 670px;
+}
+
+.header-box li {
+    display: inline-block;
+    list-style: none;
+}
+
+.form-box {
+    display: flex;
+    background-color: #333;
+    border-radius: 5px;
+    width: 670px;
+    color: #ffffff;
+}
+
+/* Inputs padrão */
+.form-box input {
+    align-items: center;
+    background-color: #ffffff;
+    width: 600px;
+    padding: 15px;
+    margin-top: 12px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+
+/* Botão */
+.form-box button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 5px;
+    background: red;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Hover opcional */
+.form-box button:hover {
+    opacity: 0.85;
+}
+
+.loading-div {
+    width: 50px;
+    display: none;
+}
+
+.loading-div img {
+    height: 50px;
+    width: 50px;
+}
+
+#div_erros_login {
+    display: none
+}
