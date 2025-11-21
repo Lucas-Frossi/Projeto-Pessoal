@@ -10,7 +10,7 @@
 
     <script src="./js/sessao.js"></script>
 
-    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/.css">
     <link rel="icon" href="./assets/icon/icone_jordan_preto.png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 </head>
@@ -28,7 +28,7 @@
                         <a href="#">HISTÓRIA</a>
                     </li>
                     <li>
-                        <a href="#">QUIZZ</a>
+                        <a href="quiz.html">QUIZZ</a>
                     </li>
                     <li class="agora">
                         <a href="#">CADASTRO</a>
@@ -124,7 +124,7 @@
                     sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
 
                     setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
+                        window.location = "quiz.html";
                     }, 1000); // apenas para exibir o loading
 
                 });

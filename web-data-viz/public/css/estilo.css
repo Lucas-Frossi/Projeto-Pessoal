@@ -4,37 +4,48 @@ body {
   margin: 0;
   padding: 0;
   font-family: 'Barlow', 'Segoe UI', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: black;
+  overflow-x: hidden;
 }
 
 :root {
   --tamanho-header: 80px;
-  --tamanho-banner: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
+  --tamanho-banner: calc(120vh - var(--tamanho-footer) - 0px);
   --tamanho-simulador: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
   --tamanho-login: calc(100vh - var(--tamanho-header) - var(--tamanho-footer) - 2px);
   --tamanho-footer: 65px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
 }
 
 .container {
   display: flex;
   width: 80%;
   margin: auto;
+
 }
 
-.header {
+header {
   height: var(--tamanho-header);
-  border-bottom: 2px solid #32b9cd;
+  background-color: transparent;
+  z-index: 1000;
+   background-image: url('../assets/imgs/foto_banner_home.png');
+
 }
 
-.header .container {
+header .container {
   justify-content: space-between;
   align-items: center;
   height: 100%;
+  background-color: transparent;
+  
 }
 
-.header a {
+header a {
   text-decoration: none;
-  color: #e3b062;
+  color: #ffffff;
 }
 
 .agora {
@@ -47,25 +58,33 @@ body {
   align-items: center;
   justify-content: space-between;
   list-style: none;
-  color: #e3b062;
+  
 }
 
 .titulo {
- height: auto;
- width: 40px;
+  height: auto;
+  width: 40px;
+  margin: 40px;
 }
 
 .header h1 {
   margin: 0;
+  
 }
 
 /* BANNER */
 
 .banner {
+  width: 100%;
+  position: relative;
+  height: auto;
+  display: flex;
   height: var(--tamanho-banner);
   color: white;
-  background-image: url('../assets/imgs/bg-jelly-fish-para-home.png');
+  background-image: url('../assets/imgs/foto_banner_home.png');
   background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .banner .container {
@@ -120,7 +139,7 @@ body {
 /* FOOTER */
 
 .footer {
-  background-color: #32b9cd;
+  background-color: #404040;
   height: 150px;
   color: #fff;
   display: flex;
@@ -236,7 +255,7 @@ body {
 
 /* FORMULARIO */
 
-.alerta_erro{
+.alerta_erro {
   display: flex;
   justify-content: flex-end;
 }
@@ -253,7 +272,7 @@ body {
   margin-right: 10%;
 }
 
-.card_erro #mensagem_erro{
+.card_erro #mensagem_erro {
   font-weight: 500;
   font-size: 20px;
 }
@@ -309,7 +328,7 @@ input {
 
 .simulador .container {
   flex-direction: column;
-  overflow: scroll; 
+  overflow: scroll;
   height: var(--tamanho-simulador);
 }
 
@@ -353,9 +372,23 @@ input {
 }
 
 @keyframes bell {
-  0%   {transform: rotate(25deg)}
-  25%  {transform: rotate(-25deg)}
-  50%  {transform: rotate(25deg)}
-  75%  {transform: rotate(-25deg)}
-  100% {transform: rotate(25deg)}
+  0% {
+    transform: rotate(25deg)
+  }
+
+  25% {
+    transform: rotate(-25deg)
+  }
+
+  50% {
+    transform: rotate(25deg)
+  }
+
+  75% {
+    transform: rotate(-25deg)
+  }
+
+  100% {
+    transform: rotate(25deg)
+  }
 }
