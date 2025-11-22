@@ -1,0 +1,135 @@
+* {
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow-x: hidden;
+    background-image: url('../assets/imgs/foto_banner_quiz.png');
+    color: #ffffff;
+}
+
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+    margin: 40px;
+    background-color: transparent;
+}
+
+.header .container {
+    margin: auto;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+}
+
+.header #icone-banner {
+    margin-left: 40px;
+    width: auto;
+    height: 35px;
+}
+
+.navbar {
+    margin-right: 30px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.navbar img {
+    width: 25px;
+    height: auto;
+}
+
+.box-cadastro {
+    width: 120px;
+    display: flex;
+    align-items: center;
+    padding: 0 2px 0 6px;
+    gap: 15px;
+    border-radius: 50px;
+    background-color: #ffffff;
+}
+
+.box-cadastro li a {
+    color: #000000;
+}
+
+.box-cadastro img {
+    padding: 4px 2px 0 2px;
+}
+
+.flex-colunar {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-linear {
+    display: flex;
+}
+
+.width-fit-content {
+    width: fit-content;
+}
+
+.border-primary {
+    border: 3px solid var(--primary-brand-color);
+}
+
+.border-secondary {
+    border: 3px solid var(--secondary-brand-color);
+}
+
+.padding-8 {
+    padding: 8px;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+#pontuacaoEJogo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#jogo {
+    width: 75%;
+    height: 500px;
+    background-color: #404040;
+    opacity: 72%;
+}
+
+#jogo h1 {
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+#botoes {
+    display: flex;
+}
+
+#botoes button {
+    width: 31%;
+    height: 30px;
+    border: none;
+    background-color: #A61414;
+    color: #ffffff;
+    border-radius: 2px;
+      cursor: pointer;
+}
