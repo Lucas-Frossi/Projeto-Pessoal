@@ -205,7 +205,7 @@ body {
 .boxes img {
     width: 430px;
     height: auto;
-    border-radius: 50px;
+    border-radius: 25px;
 }
 
 .boxes .container {

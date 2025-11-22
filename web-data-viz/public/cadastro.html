@@ -10,8 +10,8 @@
 
   <script src="./js/sessao.js"></script>
 
-  <link rel="stylesheet" href="./css/.css" />
-  <link rel="icon" href="./assets/icon/icon_logo_jordan.webp" />
+  <link rel="stylesheet" href="./css/cadastro.css" />
+  <link rel="icon" href="./assets/icon/icone_jordan_preto.png" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
 </head>
 
@@ -21,7 +21,6 @@
       <img src="./assets/icon/icone_jordan _branco.png" alt="Icone Jordan">
     </div>
     <div class="right-form">
-      <!--header inicio-->
       <div class="header-box">
         <ul class="navbar">
           <li>
@@ -41,7 +40,6 @@
           </li>
         </ul>
       </div>
-      <!--header fim-->
       <div class="login">
         <div class="alerta_erro">
           <div class="card_erro" id="cardErro">
@@ -49,7 +47,7 @@
           </div>
         </div>
         <div class="form-box">
-          <div class="card card-cadastro">
+          <div class="card-cadastro">
             <h2>INSIRA SUAS INFORMAÇÕES PESSOAIS PARA CRIAR SUA CONTA</h2>
             <div class="formulario">
               <div class="campo">
@@ -68,12 +66,14 @@
                 <span>Confirmação da Senha:</span>
                 <input id="confirmacao_senha_input" type="password" placeholder="******" />
               </div>
+              <div class="confirmacao">
+                <span>JÁ TEM UMA CONTA?   <a href="login.html">ENTRAR</a></span>
+              </div>
               <button class="botao" onclick="cadastrar()">Cadastrar</button>
             </div>
             <div id="div_aguardar" class="loading-div">
               <img src="./assets/circle-loading.gif" id="loading-gif" />
             </div>
-
             <div id="div_erros_login"></div>
           </div>
         </div>
