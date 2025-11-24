@@ -67,9 +67,10 @@
                 </div>
                 <div id="botoes" class="flex-linear padding-8">
                     <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
-                    <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                    <button onclick="avancar()" id="btnProx" disabled>
+                        <div id="divMsg">Avançar para próxima questão</div>
+                    </button>
                     <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
-                    <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
                 </div>
             </div>
         </div>
@@ -123,23 +124,14 @@
             alternativaC: "Air Jordan 4",
             alternativaD: "Air Jordan 7",
             alternativaCorreta: "alternativaA"
-        },
-
-        {
-            pergunta: "Qual seu Air Jordan preferido?",
-            alternativaA: "Air Jordan 1",
-            alternativaB: "Air Jordan 3",
-            alternativaC: "Air Jordan 5",
-            alternativaD: "Air Jordan 11",
-            alternativaCorreta: "alternativaD"
         }
-
     ]
 
     // variáveis globais    
     var idUsuario = sessionStorage.ID_USUARIO
     let numeroDaQuestaoAtual = 0
     let pontuacaoFinal = 0
+    let tentativa = 0
     let tentativaIncorreta = 0
     let certas = 0
     let erradas = 0
@@ -151,6 +143,8 @@
     }
 
     function iniciarQuiz() {
+        tentativa++
+
         document.getElementById('jogo').style.display = "flex"
         document.getElementById('btnIniciarQuiz').style.display = "none"
 
@@ -161,7 +155,6 @@
         btnSubmeter.disabled = false
         btnProx.disabled = true
         // btnConcluir.disabled = true
-        btnTentarNovamente.disabled = true
     }
 
     function preencherHTMLcomQuestaoAtual(index) {
@@ -223,14 +216,27 @@
             alert("Atenção... a próxima é a ultima questão!")
             preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
         } else {
-            finalizarJogo()
+            divMsg.innerHTML = 'Coletando Resultados...'
+            estatistica()
+            limparCoresBackgroundOpcoes()
         }
-        limparCoresBackgroundOpcoes()
     }
 
-    function tentarNovamente() {
-        // atualiza a página
-        window.location.reload()
+    function estatistica() {
+        fetch("/quiz/inserir", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                pontuacaoServer: pontuacaoFinal,
+                tentativaServer: tentativa,
+                idServer: idUsuario
+            }),
+        })
+        setTimeout(function () {
+            window.location = "dashboard.html";
+        }, 3000);
     }
 
     function checarResposta() {
@@ -280,39 +286,5 @@
         for (let i = 0; i < options.length; i++) {
             options[i].checked = false;
         }
-    }
-
-    function finalizarJogo() {
-        let textoParaMensagemFinal = null
-        let classComCoresParaMensagemFinal = null
-        const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
-
-        if (porcentagemFinalDeAcertos <= 0.3) {
-            textoParaMensagemFinal = "Parece que você não estudou..."
-            classComCoresParaMensagemFinal = "text-danger-with-bg"
-        }
-        else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
-            textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
-            classComCoresParaMensagemFinal = "text-warning-with-bg"
-        }
-        else if (porcentagemFinalDeAcertos >= 0.9) {
-            textoParaMensagemFinal = "Uau, parabéns!"
-            classComCoresParaMensagemFinal = "text-success-with-bg"
-        }
-
-        textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos) * 100) + "% das questões."
-
-
-        document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
-        document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
-        document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
-
-        document.getElementById('jogo').classList.add("text-new-gray")
-
-        btnProx.disabled = true
-        btnSubmeter.disabled = true
-        // btnConcluir.disabled = true
-        btnTentarNovamente.disabled = false
-
     }
 </script>

@@ -1,35 +1,34 @@
 var database = require("../database/config");
 
-function buscarUltimasMedidas(idAquario, limite_linhas) {
+function buscarMedidasKpi(idUsuario, limite_linhas) {
 
     var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        momento,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico
-                    FROM medida
-                    WHERE fk_aquario = ${idAquario}
-                    ORDER BY id DESC LIMIT ${limite_linhas}`;
+    pontuacao,
+    ROUND((pontuacao / 5) * 100, 2) AS porcentagem_acertos,
+    (SELECT COUNT(*) FROM resposta WHERE fkUsuario = ${idUsuario}) AS quantidade_tentativas
+FROM resposta
+WHERE fkUsuario = ${idUsuario}
+ORDER BY idResposta DESC
+LIMIT ${limite_linhas};`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
-function buscarMedidasEmTempoReal(idAquario) {
+function buscarMedidasGrafico() {
 
     var instrucaoSql = `SELECT 
-        dht11_temperatura as temperatura, 
-        dht11_umidade as umidade,
-                        DATE_FORMAT(momento,'%H:%i:%s') as momento_grafico, 
-                        fk_aquario 
-                        FROM medida WHERE fk_aquario = ${idAquario} 
-                    ORDER BY id DESC LIMIT 1`;
+    preferencia,
+    COUNT(*) AS quantidade_usuarios
+FROM usuario
+GROUP BY preferencia
+ORDER BY quantidade_usuarios DESC;`;
 
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
 
 module.exports = {
-    buscarUltimasMedidas,
-    buscarMedidasEmTempoReal
+    buscarMedidasKpi,
+    buscarMedidasGrafico
 }

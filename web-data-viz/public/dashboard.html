@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/icone_jordan_preto.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrimeFlight | Dashboards</title>
+
+
+    <link rel="stylesheet" href="./../css/dashboards.css">
+    <link rel="stylesheet" href="./../css/estilo.css" />
+    <script src="../js/sessao.js"></script>
+    <script src="./../js/alerta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+
+    <!-- scripts do Chart.js - 2022-1 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<!-- <body onload=" atualizarFeed()"> -->
+
+<body onload="obterDadosGrafico()">
+
+    <div class="janela">
+        <div class="header-left">
+            <img src="../assets/imgs/logo_jordan_branca.png" alt="">
+            <div class="hello">
+                <h3>Olá, <span id="b_usuario">usuário</span>!</h3>
+            </div>
+            <div class="navbar">
+                <div class="btn-nav">
+                    <a href="./cards.html">
+                        <img src="../assets/icon/icone_dashboard.png" alt="">
+                        <h3 class="agora">DashBoard</h3>
+                    </a>
+                </div>
+                <div class="btn-nav">
+                    <a href="../quiz.html">
+                        <img src="../assets/icon/icone_quiz.png" alt="">
+                        <h3>Refazer Quiz</h3>
+                    </a>
+                </div>
+                <div class="btn-nav" onclick="limparSessao()">
+                    <a href="../index.html">
+                        <img src="../assets/icon/icone_logout.png" alt="">
+                        <h3>Sair</h3>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="dash">
+            <h1>ESTATÍSTICAS</h1>
+            <div class="boxes-kpis">
+                <div class="kpi">
+                    <span>Qtd de Acertos da Última Partida</span>
+                    <h2 id="qtdAcertos"></h2>
+                </div>
+                <div class="kpi">
+                    <span>Percentual do Seu Nível de Conhecimento por Tênis Jordan.</span>
+                    <h2 id="porcent"></h2>
+                </div>
+                <div class="kpi">
+                    <span>Qtd de Questionários Realizados</span>
+                    <h2 id="tentativas"></h2>
+                </div>
+            </div>
+            <div class="graph">
+                <h1>Air Jordan com Maior Preferência Entre os Usuarios</h1>
+                <div id="graficos">
+                    <canvas id="graphic"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
+
+<script>
+    b_usuario.innerHTML = sessionStorage.NOME_USUARIO;
+
+    function obterDadosGrafico() {
+        var idUsuario = sessionStorage.ID_USUARIO;
+
+        fetch(`/medidas/kpis/${idUsuario}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                    resposta.reverse();
+
+                    plotarKpi(resposta)
+
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    fetch(`/medidas/grafico`, { cache: 'no-store' }).then(function (response) {
+        if (response.ok) {
+            response.json().then(function (resposta) {
+                console.log(`Dados recebidos: ${JSON.stringify(resposta)}`);
+                resposta.reverse();
+
+                plotarGrafico(resposta)
+
+            });
+        } else {
+            console.error('Nenhum dado encontrado ou erro na API');
+        }
+    })
+        .catch(function (error) {
+            console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+        });
+
+
+    function plotarKpi(resposta) {
+        console.log('iniciando plotagem do kpis...');
+
+        qtdAcertos.innerHTML = resposta[0].pontuacao;
+        porcent.innerHTML = `${resposta[0].porcentagem_acertos} %`;
+        tentativas.innerHTML = resposta[0].quantidade_tentativas;
+
+    }
+
+    // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
+    // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
+    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
+    function plotarGrafico(resposta) {
+
+        console.log('iniciando plotagem do gráfico...');
+
+        // Criando estrutura para plotar gráfico - labels
+        let labels = ['Air Jordan 1', 'Air Jordan 3', 'Air Jordan 5', 'Air Jordan 11'];
+
+        // Criando estrutura para plotar gráfico - dados
+        let dados = {
+            labels: labels,
+            datasets: [{
+                label: 'Preferências',
+                data: [],
+                fill: false,
+                borderColor: 'green',
+                tension: 0.1
+            }]
+        };
+
+        console.log('----------------------------------------------')
+        console.log('Estes dados foram recebidos pela funcao "obterDadosGrafico" e passados para "plotarGrafico":')
+        console.log(resposta)
+
+        // Inserindo valores recebidos em estrutura para plotar o gráfico
+        for (i = 0; i < resposta.length; i++) {
+            var registro = resposta[i];
+            dados.datasets[0].data.push(registro.quantidade_usuarios);
+        }
+
+        console.log('----------------------------------------------')
+        console.log('O gráfico será plotado com os respectivos valores:')
+        console.log('Labels:')
+        console.log(labels)
+        console.log('Dados:')
+        console.log(dados.datasets)
+        console.log('----------------------------------------------')
+
+        // Criando estrutura para plotar gráfico - config
+        const config = {
+            type: 'bar',
+            data: dados,
+        };
+
+        // Adicionando gráfico criado em div na tela
+        let myChart = new Chart(
+            document.getElementById(`graphic`),
+            config
+        );
+    }
+</script>
