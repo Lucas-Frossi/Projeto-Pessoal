@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 * {
     justify-content: space-between;
     margin: 0;
@@ -46,6 +50,25 @@ body {
     text-decoration: none;
     color: #ffffff;
     font-size: 14px;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+}
+
+
+.navbar a:nth-of-type(1):hover {
+    text-decoration: underline;
+}
+
+.navbar a:nth-of-type(2):hover {
+    text-decoration: underline;
+}
+
+.navbar a:nth-of-type(3):hover {
+    text-decoration: underline;
+}
+
+.navbar a:nth-of-type(4):hover {
+    text-decoration: underline;
 }
 
 .navbar img {
@@ -90,7 +113,8 @@ body {
     justify-content: initial;
     width: 90%;
     height: 41%;
-    font-size: 40px;
+    font-size: 60px;
+    font-family: 'League Spartan', sans-serif;
     font-weight: 700;
 }
 
@@ -102,6 +126,7 @@ body {
     height: 41%;
     font-size: 40px;
     font-style: italic;
+    font-family: 'Playfair Display', sans-serif;
 }
 
 .boxes-imgs {
@@ -141,8 +166,10 @@ body {
 }
 
 #chamada {
-    font-size: 30px;
+    font-size: 60px;
     color: #ffffff;
+    font-family: 'League Spartan', sans-serif;
+    font-weight: bold;
 }
 
 .legenda {
@@ -154,12 +181,17 @@ body {
     margin-left: 5%;
 }
 
+.legenda h1 {
+    font-family: 'League Spartan', sans-serif;
+}
+
 .pesquisa {
     display: flex;
-    gap: 0px;
     align-items: center;
     justify-content: initial;
     color: #404040;
+    font-family: 'League Spartan', sans-serif;
+    font-size: 20px;
 }
 
 .box-saibamais {
@@ -173,9 +205,15 @@ body {
 }
 
 .box-saibamais a {
-    font-size: 14px;
+    font-size: 12px;
     color: #ffffff;
     text-decoration: none;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+}
+
+.box-saibamais a:nth-of-type(1):hover {
+    text-decoration: underline;
 }
 
 .box-saibamais img {
@@ -188,9 +226,10 @@ body {
     display: flex;
     flex-direction: column;
     align-items: initial;
-    width: 80%;
+    width: 90%;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 25px;
+    font-family: 'League Spartan', sans-serif;
 }
 
 .boxes {
@@ -199,8 +238,10 @@ body {
     margin-top: 50px;
 }
 
+
 .boxes h2 {
     margin-left: 80px;
+    font-family: 'League Spartan', sans-serif;
 }
 
 .boxes img {
@@ -220,6 +261,8 @@ body {
     color: #ffffff;
     padding: 0 0 10px 45px;
     font-style: italic;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
 }
 
 .box p {
@@ -227,6 +270,7 @@ body {
     color: #ffffff;
     font-size: 22px;
     margin-right: 30px;
+    font-family: 'League Spartan', sans-serif;
 }
 
 footer .container {
@@ -241,10 +285,14 @@ footer .container {
 .container .navbar li {
     list-style: none;
     padding: 0 220px 0 5px;
+    font-style: italic;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 300;
 }
 
 .container .descricao h4 {
     padding: 90px 380px 0 5px;
+    font-family: 'League Spartan', sans-serif;
 }
 
 .container .icones {

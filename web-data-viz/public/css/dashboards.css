@@ -1,3 +1,5 @@
+
+
 * {
   margin: 0;
   padding: 0;
@@ -32,6 +34,7 @@ body {
   align-items: center;
 
 }
+
 .header-left .hello {
   margin-top: 15px;
 }
@@ -92,21 +95,28 @@ body {
   margin-top: 15px;
 }
 
-.kpi h2{
+.kpi h2 {
   align-self: flex-start;
   margin-left: 15px;
   margin-bottom: 15px;
 }
 
 .graph {
+  position: relative;
   background-color: #404040;
   width: 1080px;
   margin-left: 15px;
   margin-top: 15px;
-  height: 310px;
+  height: 520px;
   border-radius: 5px;
 }
 
 .graph h1 {
   color: #ffffff;
+}
+
+.graph canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
 }
