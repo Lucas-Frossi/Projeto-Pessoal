@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +14,7 @@ body {
 
 .container {
     display: flex;
-    justify-content: space-between;
+    gap: 40px;
 }
 
 .left-img {
@@ -73,12 +76,18 @@ body {
     text-decoration: none;
     color: #ffffff;
     font-size: 14px;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+}
+
+.navbar a:nth-of-type(1):hover {
+    text-decoration: underline;
 }
 
 .login {
     display: flex;
-    margin-top: 75px;
-    padding: 0 0 12px 0;
+    margin-top: 20px;
+    padding: 0 0 0 0;
     width: 80%;
     background-color: #404040;
     border-radius: 5px;
@@ -87,8 +96,8 @@ body {
 .card-cadastro {
     display: flex;
     flex-direction: column;
-    align-items: start;
-    gap: 35px;
+    align-items: center;
+    font-family: 'League Spartan', sans-serif;
 }
 
 .card-cadastro h2 {
@@ -96,53 +105,104 @@ body {
     margin-left: 25px;
     margin-right: 25px;
     text-align: center;
+    font-family: 'League Spartan', sans-serif;
 }
 
 .formulario {
     display: flex;
     flex-direction: column;
-    margin-left: 25px;
+    justify-content: center;
+    align-items: center;
 }
 
 .formulario .campo {
     display: flex;
     flex-direction: column;
-    margin-left: 65px;
+    justify-content: center;
+    align-items: start;
     border: none;
 }
 
 
 .formulario .campo input {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border: none;
     outline: none;
     border-radius: 2px;
     height: 40px;
     width: 460px;
+    font-family: 'League Spartan', sans-serif;
+}
+
+
+.formulario .campo select {
+    margin-bottom: 10px;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    height: 40px;
+    width: 460px;
+    font-family: 'League Spartan', sans-serif;
+}
+
+.msg_informacao {
+    padding: 0 0 0 0;
+}
+
+.msg_erro {
+    font-size: 18px;
+    color: #ff0000;
+    text-align: left;
+    padding: 0 0 5px 0;
+    margin-bottom: 10px;
+}
+
+.div_senha {
+    position: relative;
+}
+
+.campo .olho-senha {
+    position: absolute;
+    padding: 0 0 0 0;
+    top: 20px;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 22px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.campo .olho-senha:hover {
+    opacity: 1;
 }
 
 .confirmacao {
-    margin-left: 175px;
     padding: 15px 0 0 0;
     font-size: 14px;
+    font-family: 'League Spartan', sans-serif;
 }
 
 .confirmacao a {
     color: #A61414;
+    text-decoration: none;
+}
+
+.confirmacao a:nth-of-type(1):hover {
+    text-decoration: underline;
 }
 
 .formulario button {
     background-color: #A61414;
+    padding: 0 0 0 0;
     color: #ffffff;
     width: 460px;
     height: 30px;
     margin-top: 20px;
-    margin-left: 65px;
+    margin-bottom: 20px;
     border: none;
     border-radius: 2px;
- 
+    font-family: 'League Spartan', sans-serif;
+    font-size: 16px;
 }
 
-#div_aguardar {
-    display: none;
-}

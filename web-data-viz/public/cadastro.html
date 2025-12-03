@@ -41,34 +41,47 @@
         </ul>
       </div>
       <div class="login">
-        <div class="alerta_erro">
-          <div class="card_erro" id="cardErro">
-            <span id="mensagem_erro"></span>
-          </div>
-        </div>
         <div class="form-box">
           <div class="card-cadastro">
             <h2>INSIRA SUAS INFORMAÇÕES PESSOAIS PARA CRIAR SUA CONTA</h2>
             <div class="formulario">
+
               <div class="campo">
-                <span>Nome:</span>
-                <input id="nome_input" type="text" placeholder="Seu nome" />
+                <div class="msg_informacao"> Nome: </div>
+                <input type="text" id="ipt_nome" onkeyup="onkey_nome()">
+                <div class="msg_erro" id="div_msg_nome"></div>
               </div>
+
               <div class="campo">
-                <span>E-mail:</span>
-                <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
+                <div class="msg_informacao"> Email: </div>
+                <input type="text" id="ipt_email" onkeyup="onkey_email()"  placeholder="meuemail@provedor.com">
+                <div class="msg_erro" id="div_msg_email"></div>
               </div>
+
               <div class="campo">
-                <span>Senha:</span>
-                <input id="senha_input" type="password" placeholder="******" />
+                <div class="msg_informacao"> Senha: </div>
+                <div class="div_senha">
+                  <input type="password" id="ipt_senha" onkeyup="onkey_senha()" placeholder="******">
+                  <img src="./assets/imgs/olho-aberto-senha.png" alt="Mostrar senha" class="olho-senha"
+                    onclick="mostrarSenha('ipt_senha', this)">
+                </div>
+                <div class="msg_erro" id="div_msg_senha"></div>
               </div>
+
               <div class="campo">
-                <span>Confirmação da Senha:</span>
-                <input id="confirmacao_senha_input" type="password" placeholder="******" />
+                <div class="msg_informacao"> Confirmação de senha: </div>
+                <div class="div_senha">
+                  <input type="password" id="ipt_confirmacaoSenha" onkeyup="onkey_conf_senha()" placeholder="******">
+                  <img src="./assets/imgs/olho-aberto-senha.png" alt="Mostrar senha" class="olho-senha"
+                    onclick="mostrarSenha('ipt_confirmacaoSenha', this)">
+                </div>
+                <div class="msg_erro" id="div_msg_conf_senha"></div>
               </div>
-               <div class="campo">
-                <span>Qual Air JOrdan de sua Preferência:</span>
+
+              <div class="campo">
+                <span>Qual Air Jordan de sua Preferência:</span>
                 <select id="escolhaTenis">
+                  <option value="#">Selecione...</option>
                   <option value="Air Jordan 1">Air Jordan 1</option>
                   <option value="Air Jordan 3">Air Jordan 3</option>
                   <option value="Air Jordan 5">Air Jordan 5</option>
@@ -76,89 +89,214 @@
                 </select>
               </div>
               <div class="confirmacao">
-                <span>JÁ TEM UMA CONTA?   <a href="login.html">ENTRAR</a></span>
+                <span>JÁ TEM UMA CONTA? <a href="login.html">ENTRAR</a></span>
               </div>
               <button class="botao" onclick="cadastrar()">Cadastrar</button>
             </div>
-            <div id="div_aguardar" class="loading-div">
-              <img src="./assets/circle-loading.gif" id="loading-gif" />
-            </div>
-            <div id="div_erros_login"></div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
 </body>
 
 </html>
 
 <script>
-  function cadastrar() {
-    var nomeVar = nome_input.value;
-    var emailVar = email_input.value;
-    var senhaVar = senha_input.value;
-    var confirmacaoSenhaVar = confirmacao_senha_input.value;
-    var escolhaTenisVar = escolhaTenis.value;
+  function mostrarSenha(idInput, icone) {
+    const input = document.getElementById(idInput);
 
-    // Verificando se há algum campo em branco
-    if (
-      nomeVar == "" ||
-      emailVar == "" ||
-      senhaVar == "" ||
-      confirmacaoSenhaVar == ""
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Mensagem de erro para todos os campos em branco)";
-
-      finalizarAguardar();
-      return false;
+    if (input.type == "password") {
+      input.type = "text";
+      icone.src = "./assets/imgs/olho-fechado-senha.png";
     } else {
-      setInterval(sumirMensagem, 5000);
+      input.type = "password";
+      icone.src = "./assets/imgs/olho-aberto-senha.png";
     }
-
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        escolhaServer: escolhaTenisVar,
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          cardErro.style.display = "block";
-
-          mensagem_erro.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
-
-    return false;
   }
 
-  function sumirMensagem() {
-    cardErro.style.display = "none";
+  var chknome = false;
+  var chkemail = false;
+  var chksenha = false;
+  var chkconfsenha = false;
+  var chkpreferencia = false;
+
+  function onkey_email() {
+    email = ipt_email.value.trim();
+    let erro = "";
+
+    if (email == '') {
+      erro = `Preencha o campo Email`;
+    } else if (email.indexOf("@") == -1) {
+      erro = `Insira um email válido que contenha @`;
+    }
+
+    if (erro != "") {
+      div_msg_email.innerHTML = `${erro}`;
+      chkemail = false;
+    } else {
+      div_msg_email.innerHTML = ``;
+      chkemail = true;
+    }
+  }
+
+  function onkey_senha() {
+    var senha = ipt_senha.value.trim();
+    var contador = 0;
+    var temMaiuscula = false;
+
+    while (contador < senha.length) {
+      var letra = senha[contador];
+
+      if (letra >= "A" && letra <= "Z") {
+        temMaiuscula = true;
+        break;
+      }
+      contador++;
+    }
+
+    let erro = "";
+
+    if (senha == '') {
+      erro = `Preencha o campo Senha`;
+    }
+
+    else if (senha.indexOf("0") == -1 && senha.indexOf("1") == -1 && senha.indexOf("2") == -1 &&
+      senha.indexOf("3") == -1 && senha.indexOf("4") == -1 && senha.indexOf("5") == -1 &&
+      senha.indexOf("6") == -1 && senha.indexOf("7") == -1 && senha.indexOf("8") == -1 &&
+      senha.indexOf("9") == -1) {
+      erro = 'A senha deve conter pelo menos um número!';
+    }
+
+    else if (!temMaiuscula) {
+      erro = 'A senha deve conter pelo menos uma letra maiúscula!';
+    }
+
+    else if (senha.indexOf("!") == -1 && senha.indexOf("@") == -1 && senha.indexOf("#") == -1 && senha.indexOf("$") == -1 && senha.indexOf("%") == -1 && senha.indexOf("&") == -1) {
+      erro = 'A senha deve conter pelo menos <br>um caractere especial (!, @, #, $, %, &)';
+    }
+
+    else if (senha.length < 8) {
+      erro = 'A senha deve ter pelo menos 8 caracteres!'
+    }
+
+    if (erro != "") {
+      div_msg_senha.innerHTML = `${erro}`;
+      chksenha = false;
+    } else {
+      div_msg_senha.innerHTML = ``;
+      chksenha = true;
+    }
+  }
+
+  function onkey_nome() {
+    nome = ipt_nome.value.trim();
+    let erro = "";
+
+    if (nome == '') {
+      erro = `Preencha o campo Nome`;
+    }
+
+    if (erro != "") {
+      div_msg_nome.innerHTML = `${erro}`;
+      chknome = false;
+    } else {
+      div_msg_nome.innerHTML = ``;
+      chknome = true;
+    }
+  }
+
+  function onkey_conf_senha() {
+    senha = ipt_senha.value.trim();
+    senha_conf = ipt_confirmacaoSenha.value.trim();
+    let erro = "";
+
+    if (senha_conf == '') {
+      erro = `Preencha o campo Confirmação de Senha`;
+    } else if (senha != senha_conf) {
+      erro = 'As senhas digitadas são diferentes. <br>Por favor, verifique e tente novamente.'
+    }
+
+    if (erro != "") {
+      div_msg_conf_senha.innerHTML = `${erro}`;
+      chksenha_conf = false;
+    } else {
+      div_msg_conf_senha.innerHTML = ``;
+      chksenha_conf = true;
+    }
+  }
+
+  function cadastrar() {
+    if (escolhaTenis.value == '#') {
+      alert('Escolha um Air Jordan de sua preferência')
+      chkpreferencia = false;
+    }
+    else if (escolhaTenis.value != '#') {
+      var axresposta = prompt(`O ${escolhaTenis.value} é a sua escolha? (Sim/Não)`)
+      chkpreferencia = false
+      if (axresposta == 'Sim') {
+        chkpreferencia = true;
+      } else {
+        alert('Escolha um Air Jordan de sua preferência')
+        chkpreferencia = false
+        escolhaTenis.value = '#'
+      }
+    }
+
+    onkey_nome();
+    onkey_email();
+    onkey_senha();
+    onkey_conf_senha();
+
+    const temErro = chknome &&
+      chkemail &&
+      chksenha &&
+      chksenha_conf &&
+      chkpreferencia
+
+
+    if (!temErro) {
+      alert("Verifique se todos os campos estão preenchidos!");
+      return false;
+    } else {
+      var nomeVar = ipt_nome.value;
+      var emailVar = ipt_email.value;
+      var senhaVar = ipt_senha.value;
+      var preferenciaVar = escolhaTenis.value;
+
+      fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          nomeServer: nomeVar,
+          emailServer: emailVar,
+          senhaServer: senhaVar,
+          escolhaServer: preferenciaVar
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+
+          if (resposta.ok) {
+
+            alert("Cadastro realizado com sucesso! Redirecionando para tela de Login...");
+
+            setTimeout(() => {
+              window.location = "login.html";
+            }, "2000");
+
+          } else {
+            throw "Houve um erro ao tentar realizar o cadastro!";
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+        });
+
+      return false;
+
+    }
   }
 </script>

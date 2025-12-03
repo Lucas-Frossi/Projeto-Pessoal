@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -72,6 +75,12 @@ body {
     text-decoration: none;
     color: #ffffff;
     font-size: 14px;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+}
+
+.navbar a:nth-of-type(1):hover {
+    text-decoration: underline;
 }
 
 .login {
@@ -87,8 +96,11 @@ body {
 .card-cadastro {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: start;
     gap: 35px;
+    font-family: 'League Spartan', sans-serif;
+
 }
 
 .card-cadastro h2 {
@@ -96,17 +108,22 @@ body {
     margin-left: 25px;
     margin-right: 25px;
     text-align: center;
+    font-family: 'League Spartan', sans-serif;
+
 }
 
 .formulario {
     display: flex;
     flex-direction: column;
-    margin-left: 25px;
+    align-items: center;
+    justify-content: center;
 }
 
 .formulario .campo {
     display: flex;
     flex-direction: column;
+    align-items: start;
+    justify-content: center;
     margin-left: 65px;
     border: none;
 }
@@ -119,6 +136,8 @@ body {
     border-radius: 2px;
     height: 40px;
     width: 460px;
+    font-family: 'League Spartan', sans-serif;
+
 }
 
 .confirmacao {
@@ -129,6 +148,35 @@ body {
 
 .confirmacao a {
     color: #A61414;
+    text-decoration: none;
+}
+
+.confirmacao a:nth-of-type(1):hover {
+    text-decoration: underline;
+}
+
+.msg_erro {
+    font-size: 18px;
+    color: #ff0000;
+    text-align: left;
+    padding: 0 0 5px 0;
+    margin-bottom: 10px;
+}
+
+.div_senha {
+    position: relative;
+}
+
+.campo .olho-senha {
+    position: absolute;
+    padding: 0 0 0 0;
+    top: 20px;
+    right: 15px;
+    transform: translateY(-50%);
+    width: 22px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.2s;
 }
 
 .formulario button {
@@ -140,7 +188,8 @@ body {
     margin-left: 65px;
     border: none;
     border-radius: 2px;
- 
+    font-family: 'League Spartan', sans-serif;
+    font-size: 16px;
 }
 
 #div_aguardar {

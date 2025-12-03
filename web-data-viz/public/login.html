@@ -38,22 +38,25 @@
                 </ul>
             </div>
             <div class="login">
-                <div class="alerta_erro">
-                    <div class="card_erro" id="cardErro">
-                        <span id="mensagem_erro"></span>
-                    </div>
-                </div>
                 <div class="form-box">
                     <div class="card-cadastro">
                         <h2>INSIRA SUAS INFORMAÇÕES PESSOAIS PARA ACESSAR SUA CONTA</h2>
                         <div class="formulario">
                             <div class="campo">
                                 <span>E-mail:</span>
-                                <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
+                                <input id="email_input" type="text" onkeyup="onkey_email()"
+                                    placeholder="meuemail@provedor.com" />
+                                <div class="msg_erro" id="div_msg_email"> </div>
                             </div>
                             <div class="campo">
                                 <span>Senha:</span>
-                                <input id="senha_input" type="password" placeholder="******" />
+                                <div class="div_senha">
+                                    <input id="senha_input" type="password" onkeyup="onkey_senha()"
+                                        placeholder="******" />
+                                    <img src="./assets/imgs/olho-aberto-senha.png" alt="Mostrar senha"
+                                        class="olho-senha" onclick="mostrarSenha('ipt_senha', this)">
+                                </div>
+                                <div class="msg_erro" id="div_msg_senha"> </div>
                             </div>
                             <div class="confirmacao">
                                 <span>AINDA NÃO TEM UMA CONTA? <a href="cadastro.html">FAÇA SEU CADASTRO</a></span>
@@ -63,7 +66,6 @@
                         <div id="div_aguardar" class="loading-div">
                             <img src="./assets/circle-loading.gif" id="loading-gif" />
                         </div>
-                        <div id="div_erros_login"></div>
                     </div>
                 </div>
             </div>
@@ -78,22 +80,67 @@
 </html>
 
 <script>
+    function mostrarSenha(idInput, icone) {
+
+        if (senha_input.type == "password") {
+            senha_input.type = "text";
+            icone.src = "./assets/imgs/olho-fechado-senha.png";
+        } else {
+            senha_input.type = "password";
+            icone.src = "./assets/imgs/olho-aberto-senha.png";
+        }
+    }
+
+    var chkemail = false;
+    var chksenha = false;
+
+    function onkey_email() {
+        email = email_input.value.trim();
+        let erro = "";
+
+        if (email == '') {
+            erro = `Preencha o campo Email`;
+        } else if (email.indexOf("@") == -1) {
+            erro = `Insira um email válido que contenha @`;
+        }
+
+        if (erro != "") {
+            div_msg_email.innerHTML = `${erro}`;
+            chkemail = false;
+        } else {
+            div_msg_email.innerHTML = ``;
+            chkemail = true;
+        }
+    }
+
+    function onkey_senha() {
+        senha = senha_input.value.trim();
+        let erro = "";
+
+        if (senha == '') {
+            erro = `Preencha o campo Senha`;
+        } else if (senha.indexOf("0") == -1 && senha.indexOf("1") == -1 && senha.indexOf("2") == -1 &&
+            senha.indexOf("3") == -1 && senha.indexOf("4") == -1 && senha.indexOf("5") == -1 &&
+            senha.indexOf("6") == -1 && senha.indexOf("7") == -1 && senha.indexOf("8") == -1 &&
+            senha.indexOf("9") == -1) {
+            erro = 'A senha deve conter pelo menos um número!';
+        }
+
+        if (erro != "") {
+            div_msg_senha.innerHTML = `${erro}`;
+            chksenha = false;
+        } else {
+            div_msg_senha.innerHTML = ``;
+            chksenha = true;
+        }
+    }
+
 
     function entrar() {
         aguardar();
 
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
-
-        if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
-            finalizarAguardar();
-            return false;
-        }
-        else {
-            setInterval(sumirMensagem, 5000)
-        }
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
@@ -128,6 +175,9 @@
 
             } else {
 
+                if (emailVar != resposta.emailUsuario || senhaVar != resposta.senha) {
+                    alert('E-mail ou senha diferentes do cadastrado')
+                }
                 console.log("Houve um erro ao tentar realizar o login!");
 
                 resposta.text().then(texto => {
@@ -141,10 +191,6 @@
         })
 
         return false;
-    }
-
-    function sumirMensagem() {
-        cardErro.style.display = "none"
     }
 
 </script>
