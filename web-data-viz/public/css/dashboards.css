@@ -1,4 +1,5 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
 
 * {
   margin: 0;
@@ -37,6 +38,7 @@ body {
 
 .header-left .hello {
   margin-top: 15px;
+  font-family: 'League Spartan', sans-serif;
 }
 
 .header-left .navbar {
@@ -54,6 +56,7 @@ body {
   text-decoration: none;
   color: #ffffff;
   gap: 5px;
+  font-family: 'League Spartan', sans-serif;
 }
 
 .btn-nav img {
@@ -75,6 +78,8 @@ body {
   margin-top: 15px;
   margin-left: 15px;
   color: #A61414;
+  font-family: 'League Spartan', sans-serif;
+
 }
 
 .kpi {
@@ -93,12 +98,16 @@ body {
   margin-left: 15px;
   margin-right: 15px;
   margin-top: 15px;
+  font-family: 'League Spartan', sans-serif;
+
 }
 
 .kpi h2 {
   align-self: flex-start;
   margin-left: 15px;
   margin-bottom: 15px;
+  font-family: 'Raleway', sans-serif;
+  font-style: italic;
 }
 
 .graph {
@@ -113,10 +122,11 @@ body {
 
 .graph h1 {
   color: #ffffff;
+  padding: 15px;
 }
 
 .graph canvas {
-    width: 100% !important;
-    height: 100% !important;
-    display: block !important;
+  width: 100% !important;
+  height: 450px !important;
+  display: block !important;
 }
