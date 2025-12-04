@@ -154,6 +154,8 @@
 
         btnSubmeter.disabled = false
         btnProx.disabled = true
+
+        btnProx.style.backgroundColor = 'gray'
         // btnConcluir.disabled = true
     }
 
@@ -188,6 +190,9 @@
             btnSubmeter.disabled = true
             btnProx.disabled = false
 
+            btnSubmeter.style.backgroundColor = 'gray'
+            btnProx.style.backgroundColor = '#A61414'
+
             habilitarAlternativas(false)
 
             checarResposta()
@@ -208,6 +213,9 @@
         btnProx.disabled = true
         btnSubmeter.disabled = false
 
+        btnSubmeter.style.backgroundColor = '#A61414'
+        btnProx.style.backgroundColor = 'gray'
+
         desmarcarRadioButtons()
 
         if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
@@ -217,6 +225,9 @@
             preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
         } else {
             divMsg.innerHTML = 'Coletando Resultados...'
+
+            btnSubmeter.style.backgroundColor = 'gray'
+            btnProx.style.backgroundColor = '#A61414'
             estatistica()
             limparCoresBackgroundOpcoes()
         }

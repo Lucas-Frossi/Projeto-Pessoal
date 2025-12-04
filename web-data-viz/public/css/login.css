@@ -194,4 +194,10 @@ body {
 
 #div_aguardar {
     display: none;
+    align-self: center;
+}
+
+#div_aguardar img {
+    width: 25px;
+    height: auto;
 }

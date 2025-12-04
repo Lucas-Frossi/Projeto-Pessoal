@@ -54,7 +54,7 @@
 
               <div class="campo">
                 <div class="msg_informacao"> Email: </div>
-                <input type="text" id="ipt_email" onkeyup="onkey_email()"  placeholder="meuemail@provedor.com">
+                <input type="text" id="ipt_email" onkeyup="onkey_email()" placeholder="meuemail@provedor.com">
                 <div class="msg_erro" id="div_msg_email"></div>
               </div>
 
@@ -92,6 +92,9 @@
                 <span>JÁ TEM UMA CONTA? <a href="login.html">ENTRAR</a></span>
               </div>
               <button class="botao" onclick="cadastrar()">Cadastrar</button>
+            </div>
+            <div id="div_aguardar" class="loading-div">
+              <img src="./assets/aguardar.gif" id="loading-gif" />
             </div>
           </div>
         </div>
@@ -263,6 +266,8 @@
       var emailVar = ipt_email.value;
       var senhaVar = ipt_senha.value;
       var preferenciaVar = escolhaTenis.value;
+
+       aguardar();
 
       fetch("/usuarios/cadastrar", {
         method: "POST",

@@ -206,3 +206,14 @@ body {
     font-size: 16px;
 }
 
+#div_aguardar {
+    display: none;
+    align-self: center;
+}
+
+#div_aguardar img {
+    width: 25px;
+    height: auto;
+    margin-bottom: 15px;
+}
+

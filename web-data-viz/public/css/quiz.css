@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan&display=swap');
+
 * {
     justify-content: space-between;
     margin: 0;
@@ -46,6 +49,12 @@ body {
     text-decoration: none;
     color: #ffffff;
     font-size: 14px;
+    font-family: 'Raleway', sans-serif;
+    font-style: italic;
+}
+
+.navbar a:nth-of-type(1):hover {
+    text-decoration: underline;
 }
 
 .navbar img {
@@ -65,6 +74,7 @@ body {
 
 .box-cadastro li a {
     color: #000000;
+    font-family: 'Raleway', sans-serif;
 }
 
 .box-cadastro img {
@@ -120,6 +130,16 @@ body {
     font-weight: bold;
 }
 
+#btnIniciarQuiz {
+    width: 31%;
+    height: 30px;
+    border: none;
+    background-color: #A61414;
+    color: #ffffff;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
 #botoes {
     display: flex;
 }
@@ -131,5 +151,7 @@ body {
     background-color: #A61414;
     color: #ffffff;
     border-radius: 2px;
-      cursor: pointer;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'League Spartan', sans-serif;
 }
