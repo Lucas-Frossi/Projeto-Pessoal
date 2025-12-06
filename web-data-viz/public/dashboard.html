@@ -19,12 +19,9 @@
         href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
 
-    <!-- scripts do Chart.js - 2022-1 -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
-
-<!-- <body onload=" atualizarFeed()"> -->
 
 <body onload="obterDadosGrafico()">
 
@@ -137,17 +134,12 @@
 
     }
 
-    // Esta função *plotarGrafico* usa os dados capturados na função anterior para criar o gráfico
-    // Configura o gráfico (cores, tipo, etc), materializa-o na página e, 
-    // A função *plotarGrafico* também invoca a função *atualizarGrafico*
     function plotarGrafico(resposta) {
 
         console.log('iniciando plotagem do gráfico...');
 
-        // Criando estrutura para plotar gráfico - labels
         let labels = ['Air Jordan 11', 'Air Jordan 5', 'Air Jordan 3', 'Air Jordan 1'];
 
-        // Criando estrutura para plotar gráfico - dados
         let dados = {
             labels: labels,
             datasets: [{
@@ -156,7 +148,7 @@
                 backgroundColor: ['#A61414'],
                 fill: true,
                 borderColor: 'green',
-                borderRadius: 25,
+                borderRadius: 10,
                 tension: 0.1
             }]
         };
@@ -179,13 +171,12 @@
         console.log(dados.datasets)
         console.log('----------------------------------------------')
 
-        // Criando estrutura para plotar gráfico - config
         const config = {
             type: 'bar',
             data: dados,
             options: {
                 maintainAspectRatio: false,
-                responsive: true, 
+                responsive: true,
                 layout: {
                     padding: {
                         top: 40
@@ -194,7 +185,6 @@
             }
         };
 
-        // Adicionando gráfico criado em div na tela
         let myChart = new Chart(
             document.getElementById(`graphic`),
             config

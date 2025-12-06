@@ -94,7 +94,7 @@
               <button class="botao" onclick="cadastrar()">Cadastrar</button>
             </div>
             <div id="div_aguardar" class="loading-div">
-              <img src="./assets/aguardar.gif" id="loading-gif" />
+              <img src="./assets/loading.webp" id="loading-gif" />
             </div>
           </div>
         </div>
@@ -267,7 +267,7 @@
       var senhaVar = ipt_senha.value;
       var preferenciaVar = escolhaTenis.value;
 
-       aguardar();
+      aguardar();
 
       fetch("/usuarios/cadastrar", {
         method: "POST",

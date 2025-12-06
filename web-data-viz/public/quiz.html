@@ -70,7 +70,6 @@
                     <button onclick="avancar()" id="btnProx" disabled>
                         <div id="divMsg">Avançar para próxima questão</div>
                     </button>
-                    <!-- <button onclick="finalizar()" id="btnConcluir" disabled>Finalizar Quiz</button> -->
                 </div>
             </div>
         </div>
@@ -127,7 +126,7 @@
         }
     ]
 
-    // variáveis globais    
+
     var idUsuario = sessionStorage.ID_USUARIO
     let numeroDaQuestaoAtual = 0
     let pontuacaoFinal = 0
@@ -136,7 +135,6 @@
     let certas = 0
     let erradas = 0
     let quantidadeDeQuestoes = listaDeQuestoes.length
-    // let isUltima = numeroDaQuestaoAtual == quantidadeDeQuestoes-1 ? true : false
 
     function onloadEsconder() {
         document.getElementById('jogo').style.display = "none"
@@ -156,7 +154,6 @@
         btnProx.disabled = true
 
         btnProx.style.backgroundColor = 'gray'
-        // btnConcluir.disabled = true
     }
 
     function preencherHTMLcomQuestaoAtual(index) {
@@ -165,7 +162,7 @@
         numeroDaQuestaoAtual = index
         console.log("questaoAtual")
         console.log(questaoAtual)
-        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // ajustando porque o index começa em 0
+        document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1
         document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
         document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
         document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
@@ -174,7 +171,7 @@
     }
 
     function submeter() {
-        const options = document.getElementsByName("option"); // recupera alternativas no html
+        const options = document.getElementsByName("option");
 
         let hasChecked = false
         for (let i = 0; i < options.length; i++) {
@@ -251,12 +248,12 @@
     }
 
     function checarResposta() {
-        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual] // questão atual 
-        const respostaQuestaoAtual = questaoAtual.alternativaCorreta // qual é a resposta correta da questão atual
+        const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual]
+        const respostaQuestaoAtual = questaoAtual.alternativaCorreta
 
-        const options = document.getElementsByName("option"); // recupera alternativas no html
+        const options = document.getElementsByName("option");
 
-        let alternativaCorreta = null // variável para armazenar a alternativa correta
+        let alternativaCorreta = null
 
         options.forEach((option) => {
             if (option.value === respostaQuestaoAtual) {
@@ -265,7 +262,6 @@
             }
         })
 
-        // verifica se resposta assinalada é correta
         options.forEach((option) => {
             if (option.checked === true && option.value === respostaQuestaoAtual) {
                 document.getElementById(alternativaCorreta).classList.add("text-success-with-bg")
