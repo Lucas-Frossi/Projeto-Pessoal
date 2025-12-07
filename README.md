@@ -1,6 +1,6 @@
 # 👟 PrimeFlight — Meu Projeto Pessoal Sobre Tênis
 
-![Logo](PRIMEFLIGHT.png)
+![Logo](./web-data-viz/public/assets/imgs/banner.png)
 
 Bem-vindo ao meu projeto dedicado a uma das minhas maiores paixões: tênis, especialmente a lendária linha Air Jordan.
 Aqui eu reuni conteúdo, design e funcionalidades para criar uma experiência simples, mas cheia de estilo — assim como um bom par de Jordans merece.
